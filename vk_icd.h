@@ -204,7 +204,7 @@ typedef struct {
     vk_surface_transform_flag_bits_khr transform;
     float global_alpha;
     vk_display_plane_alpha_flag_bits_khr alpha_mode;
-    vk_extent2d image_extent;
+    vk_extent_2d image_extent;
 } vk_icd_surface_display;
 
 typedef struct {

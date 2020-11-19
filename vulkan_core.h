@@ -1975,16 +1975,16 @@ typedef enum vk_stencil_face_flag_bits {
     VK_STENCIL_FACE_FLAG_BITS_MAX_ENUM = 0x7fffffff
 } vk_stencil_face_flag_bits;
 typedef vk_flags vk_stencil_face_flags;
-typedef struct vk_extent2d {
+typedef struct vk_extent_2d {
     uint32_t    width;
     uint32_t    height;
-} vk_extent2d;
+} vk_extent_2d;
 
-typedef struct vk_extent3d {
+typedef struct vk_extent_3d {
     uint32_t    width;
     uint32_t    height;
     uint32_t    depth;
-} vk_extent3d;
+} vk_extent_3d;
 
 typedef struct vk_offset2d {
     int32_t    x;
@@ -1999,7 +1999,7 @@ typedef struct vk_offset3d {
 
 typedef struct vk_rect2d {
     vk_offset2d    offset;
-    vk_extent2d    extent;
+    vk_extent_2d    extent;
 } vk_rect2d;
 
 typedef struct vk_base_in_structure {
@@ -2129,7 +2129,7 @@ typedef struct vk_format_properties {
 } vk_format_properties;
 
 typedef struct vk_image_format_properties {
-    vk_extent3d            max_extent;
+    vk_extent_3d            max_extent;
     uint32_t              max_mip_levels;
     uint32_t              max_array_layers;
     vk_sample_count_flags    sample_counts;
@@ -2355,7 +2355,7 @@ typedef struct vk_queue_family_properties {
     vk_queue_flags    queue_flags;
     uint32_t        queue_count;
     uint32_t        timestamp_valid_bits;
-    vk_extent3d      min_image_transfer_granularity;
+    vk_extent_3d      min_image_transfer_granularity;
 } vk_queue_family_properties;
 
 typedef struct vk_device_queue_create_info {
@@ -2454,7 +2454,7 @@ typedef struct vk_image_subresource {
 typedef struct vk_sparse_image_memory_bind {
     vk_image_subresource         subresource;
     vk_offset3d                 offset;
-    vk_extent3d                 extent;
+    vk_extent_3d                 extent;
     vk_device_memory             memory;
     vk_device_size               memory_offset;
     vk_sparse_memory_bind_flags    flags;
@@ -2483,7 +2483,7 @@ typedef struct vk_bind_sparse_info {
 
 typedef struct vk_sparse_image_format_properties {
     vk_image_aspect_flags          aspect_mask;
-    vk_extent3d                  image_granularity;
+    vk_extent_3d                  image_granularity;
     vk_sparse_image_format_flags    flags;
 } vk_sparse_image_format_properties;
 
@@ -2549,7 +2549,7 @@ typedef struct vk_image_create_info {
     vk_image_create_flags       flags;
     vk_image_type              image_type;
     vk_format                 format;
-    vk_extent3d               extent;
+    vk_extent_3d               extent;
     uint32_t                 mip_levels;
     uint32_t                 array_layers;
     vk_sample_count_flag_bits    samples;
@@ -3026,7 +3026,7 @@ typedef struct vk_buffer_image_copy {
     uint32_t                    buffer_image_height;
     vk_image_subresource_layers    image_subresource;
     vk_offset3d                  image_offset;
-    vk_extent3d                  image_extent;
+    vk_extent_3d                  image_extent;
 } vk_buffer_image_copy;
 
 typedef union vk_clear_color_value {
@@ -3069,7 +3069,7 @@ typedef struct vk_image_copy {
     vk_offset3d                  src_offset;
     vk_image_subresource_layers    dst_subresource;
     vk_offset3d                  dst_offset;
-    vk_extent3d                  extent;
+    vk_extent_3d                  extent;
 } vk_image_copy;
 
 typedef struct vk_image_resolve {
@@ -3077,7 +3077,7 @@ typedef struct vk_image_resolve {
     vk_offset3d                  src_offset;
     vk_image_subresource_layers    dst_subresource;
     vk_offset3d                  dst_offset;
-    vk_extent3d                  extent;
+    vk_extent_3d                  extent;
 } vk_image_resolve;
 
 typedef struct vk_render_pass_begin_info {
@@ -3174,7 +3174,7 @@ typedef vk_result (VKAPI_PTR *pfn_vk_create_framebuffer)(vk_device device, const
 typedef void (VKAPI_PTR *pfn_vk_destroy_framebuffer)(vk_device device, vk_framebuffer framebuffer, const vk_allocation_callbacks* p_allocator);
 typedef vk_result (VKAPI_PTR *pfn_vk_create_render_pass)(vk_device device, const vk_render_pass_create_info* p_create_info, const vk_allocation_callbacks* p_allocator, vk_render_pass* p_render_pass);
 typedef void (VKAPI_PTR *pfn_vk_destroy_render_pass)(vk_device device, vk_render_pass render_pass, const vk_allocation_callbacks* p_allocator);
-typedef void (VKAPI_PTR *pfn_vk_get_render_area_granularity)(vk_device device, vk_render_pass render_pass, vk_extent2d* p_granularity);
+typedef void (VKAPI_PTR *pfn_vk_get_render_area_granularity)(vk_device device, vk_render_pass render_pass, vk_extent_2d* p_granularity);
 typedef vk_result (VKAPI_PTR *pfn_vk_create_command_pool)(vk_device device, const vk_command_pool_create_info* p_create_info, const vk_allocation_callbacks* p_allocator, vk_command_pool* p_command_pool);
 typedef void (VKAPI_PTR *pfn_vk_destroy_command_pool)(vk_device device, vk_command_pool command_pool, const vk_allocation_callbacks* p_allocator);
 typedef vk_result (VKAPI_PTR *pfn_vk_reset_command_pool)(vk_device device, vk_command_pool command_pool, vk_command_pool_reset_flags flags);
@@ -3691,7 +3691,7 @@ VKAPI_ATTR void VKAPI_CALL vk_destroy_render_pass(
 VKAPI_ATTR void VKAPI_CALL vk_get_render_area_granularity(
     vk_device                                    device,
     vk_render_pass                                render_pass,
-    vk_extent2d*                                 p_granularity) __asm("vkGetRenderAreaGranularity");
+    vk_extent_2d*                                 p_granularity) __asm("vkGetRenderAreaGranularity");
 
 VKAPI_ATTR vk_result VKAPI_CALL vk_create_command_pool(
     vk_device                                    device,
@@ -5695,9 +5695,9 @@ typedef vk_flags vk_surface_transform_flags_khr;
 typedef struct vk_surface_capabilities_khr {
     uint32_t                         min_image_count;
     uint32_t                         max_image_count;
-    vk_extent2d                       current_extent;
-    vk_extent2d                       min_image_extent;
-    vk_extent2d                       max_image_extent;
+    vk_extent_2d                       current_extent;
+    vk_extent_2d                       min_image_extent;
+    vk_extent_2d                       max_image_extent;
     uint32_t                         max_image_array_layers;
     vk_surface_transform_flags_khr       supported_transforms;
     vk_surface_transform_flag_bits_khr    current_transform;
@@ -5776,7 +5776,7 @@ typedef struct vk_swapchain_create_info_khr {
     uint32_t                         min_image_count;
     vk_format                         image_format;
     vk_color_space_khr                  image_color_space;
-    vk_extent2d                       image_extent;
+    vk_extent_2d                       image_extent;
     uint32_t                         image_array_layers;
     vk_image_usage_flags                image_usage;
     vk_sharing_mode                    image_sharing_mode;
@@ -5923,7 +5923,7 @@ typedef enum vk_display_plane_alpha_flag_bits_khr {
 typedef vk_flags vk_display_plane_alpha_flags_khr;
 typedef vk_flags vk_display_surface_create_flags_khr;
 typedef struct vk_display_mode_parameters_khr {
-    vk_extent2d    visible_region;
+    vk_extent_2d    visible_region;
     uint32_t      refresh_rate;
 } vk_display_mode_parameters_khr;
 
@@ -5943,12 +5943,12 @@ typedef struct vk_display_plane_capabilities_khr {
     vk_display_plane_alpha_flags_khr    supported_alpha;
     vk_offset2d                     min_src_position;
     vk_offset2d                     max_src_position;
-    vk_extent2d                     min_src_extent;
-    vk_extent2d                     max_src_extent;
+    vk_extent_2d                     min_src_extent;
+    vk_extent_2d                     max_src_extent;
     vk_offset2d                     min_dst_position;
     vk_offset2d                     max_dst_position;
-    vk_extent2d                     min_dst_extent;
-    vk_extent2d                     max_dst_extent;
+    vk_extent_2d                     min_dst_extent;
+    vk_extent_2d                     max_dst_extent;
 } vk_display_plane_capabilities_khr;
 
 typedef struct vk_display_plane_properties_khr {
@@ -5959,8 +5959,8 @@ typedef struct vk_display_plane_properties_khr {
 typedef struct vk_display_properties_khr {
     vk_display_khr                  display;
     const char*                   display_name;
-    vk_extent2d                    physical_dimensions;
-    vk_extent2d                    physical_resolution;
+    vk_extent_2d                    physical_dimensions;
+    vk_extent_2d                    physical_resolution;
     vk_surface_transform_flags_khr    supported_transforms;
     vk_bool32                      plane_reorder_possible;
     vk_bool32                      persistent_content;
@@ -5976,7 +5976,7 @@ typedef struct vk_display_surface_create_info_khr {
     vk_surface_transform_flag_bits_khr     transform;
     float                             global_alpha;
     vk_display_plane_alpha_flag_bits_khr    alpha_mode;
-    vk_extent2d                        image_extent;
+    vk_extent_2d                        image_extent;
 } vk_display_surface_create_info_khr;
 
 typedef vk_result (VKAPI_PTR *pfn_vk_get_physical_device_display_properties_khr)(vk_physical_device physical_device, uint32_t* p_property_count, vk_display_properties_khr* p_properties);
@@ -6432,7 +6432,7 @@ typedef vk_physical_device16bit_storage_features vk_physical_device16bit_storage
 #define VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME "VK_KHR_incremental_present"
 typedef struct vk_rect_layer_khr {
     vk_offset2d    offset;
-    vk_extent2d    extent;
+    vk_extent_2d    extent;
     uint32_t      layer;
 } vk_rect_layer_khr;
 
@@ -7379,7 +7379,7 @@ typedef struct vk_image_copy2khr {
     vk_offset3d                  src_offset;
     vk_image_subresource_layers    dst_subresource;
     vk_offset3d                  dst_offset;
-    vk_extent3d                  extent;
+    vk_extent_3d                  extent;
 } vk_image_copy2khr;
 
 typedef struct vk_copy_image_info2khr {
@@ -7401,7 +7401,7 @@ typedef struct vk_buffer_image_copy2khr {
     uint32_t                    buffer_image_height;
     vk_image_subresource_layers    image_subresource;
     vk_offset3d                  image_offset;
-    vk_extent3d                  image_extent;
+    vk_extent_3d                  image_extent;
 } vk_buffer_image_copy2khr;
 
 typedef struct vk_copy_buffer_to_image_info2khr {
@@ -7452,7 +7452,7 @@ typedef struct vk_image_resolve2khr {
     vk_offset3d                  src_offset;
     vk_image_subresource_layers    dst_subresource;
     vk_offset3d                  dst_offset;
-    vk_extent3d                  extent;
+    vk_extent_3d                  extent;
 } vk_image_resolve2khr;
 
 typedef struct vk_resolve_image_info2khr {
@@ -8177,9 +8177,9 @@ typedef struct vk_surface_capabilities2ext {
     void*                            p_next;
     uint32_t                         min_image_count;
     uint32_t                         max_image_count;
-    vk_extent2d                       current_extent;
-    vk_extent2d                       min_image_extent;
-    vk_extent2d                       max_image_extent;
+    vk_extent_2d                       current_extent;
+    vk_extent_2d                       min_image_extent;
+    vk_extent_2d                       max_image_extent;
     uint32_t                         max_image_array_layers;
     vk_surface_transform_flags_khr       supported_transforms;
     vk_surface_transform_flag_bits_khr    current_transform;
@@ -8734,7 +8734,7 @@ typedef struct vk_sample_locations_info_ext {
     vk_structure_type               s_type;
     const void*                   p_next;
     vk_sample_count_flag_bits         sample_locations_per_pixel;
-    vk_extent2d                    sample_location_grid_size;
+    vk_extent_2d                    sample_location_grid_size;
     uint32_t                      sample_locations_count;
     const vk_sample_location_ext*    p_sample_locations;
 } vk_sample_locations_info_ext;
@@ -8769,7 +8769,7 @@ typedef struct vk_physical_device_sample_locations_properties_ext {
     vk_structure_type       s_type;
     void*                 p_next;
     vk_sample_count_flags    sample_location_sample_counts;
-    vk_extent2d            max_sample_location_grid_size;
+    vk_extent_2d            max_sample_location_grid_size;
     float                 sample_location_coordinate_range[2];
     uint32_t              sample_location_sub_pixel_bits;
     vk_bool32              variable_sample_locations;
@@ -8778,7 +8778,7 @@ typedef struct vk_physical_device_sample_locations_properties_ext {
 typedef struct vk_multisample_properties_ext {
     vk_structure_type    s_type;
     void*              p_next;
-    vk_extent2d         max_sample_location_grid_size;
+    vk_extent_2d         max_sample_location_grid_size;
 } vk_multisample_properties_ext;
 
 typedef void (VKAPI_PTR *pfn_vk_cmd_set_sample_locations_ext)(vk_command_buffer command_buffer, const vk_sample_locations_info_ext* p_sample_locations_info);
@@ -9084,7 +9084,7 @@ typedef struct vk_physical_device_shading_rate_image_features_nv {
 typedef struct vk_physical_device_shading_rate_image_properties_nv {
     vk_structure_type    s_type;
     void*              p_next;
-    vk_extent2d         shading_rate_texel_size;
+    vk_extent_2d         shading_rate_texel_size;
     uint32_t           shading_rate_palette_size;
     uint32_t           shading_rate_max_coarse_samples;
 } vk_physical_device_shading_rate_image_properties_nv;
@@ -10148,8 +10148,8 @@ typedef struct vk_physical_device_fragment_density_map_features_ext {
 typedef struct vk_physical_device_fragment_density_map_properties_ext {
     vk_structure_type    s_type;
     void*              p_next;
-    vk_extent2d         min_fragment_density_texel_size;
-    vk_extent2d         max_fragment_density_texel_size;
+    vk_extent_2d         min_fragment_density_texel_size;
+    vk_extent_2d         max_fragment_density_texel_size;
     vk_bool32           fragment_density_invocations;
 } vk_physical_device_fragment_density_map_properties_ext;
 

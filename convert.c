@@ -45,6 +45,19 @@ static void handle_ident(FILE *f)
 		return;
 	}
 
+	if (strcmp(buf, "VkExtent2D") == 0) {
+		printf("vk_extent_2d");
+		return;
+	}
+
+	if (strcmp(buf, "VkExtent3D") == 0) {
+		printf("vk_extent_3d");
+		return;
+	}
+
+	const char *win32_ptr = strstr(buf, "Win32");
+	int win32_end = win32_ptr ? win32_ptr - buf + 5 : -1;
+
 	if (buf[0] == 'v' && buf[1] == 'k') {
 		memcpy(function_name, buf, sizeof(buf));
 		function = 1;
@@ -54,6 +67,8 @@ static void handle_ident(FILE *f)
 	for (int i = 0; i < len; i++) {
 		char c = buf[i];
 		if (isupper(c) && islower(prev))
+			fputc('_', stdout);
+		if (i == win32_end)
 			fputc('_', stdout);
 		fputc(tolower(c), stdout);
 		prev = c;
