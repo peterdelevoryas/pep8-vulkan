@@ -1,7 +1,7 @@
 # snakey-vulkan
 Vulkan headers transformed to snake_case
 
-Really dump C program "convert.c" remaps identifiers from mixedCase to snake_case. Doesn't do it perfectly, but so far works good enough for me.
+Really dumb C program "convert.c" remaps identifiers from mixedCase to snake_case. Doesn't do it perfectly, but so far works good enough for me.
 
 Still links with vulkan libraries by specifying `__asm("originalName")` as suffix on functions, to make sure the link-name is unmodified.
 
