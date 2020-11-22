@@ -44,12 +44,6 @@ static void handle_ident(FILE* f) {
         return;
     }
 
-    // PEP8: CamelCase type names.
-    if (buf[0] == 'V' && buf[1] == 'k') {
-        printf("%s", buf);
-        return;
-    }
-
     const char* win32_ptr = strstr(buf, "Win32");
     int         win32_end = win32_ptr ? win32_ptr - buf + 5 : -1;
 

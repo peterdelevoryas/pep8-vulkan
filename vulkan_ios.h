@@ -19,24 +19,24 @@ extern "C" {
 #define vk_mvk_ios_surface 1
 #define VK_MVK_IOS_SURFACE_SPEC_VERSION 3
 #define VK_MVK_IOS_SURFACE_EXTENSION_NAME "VK_MVK_ios_surface"
-typedef VkFlags VkIOSSurfaceCreateFlagsMVK;
-typedef struct VkIOSSurfaceCreateInfoMVK {
-    VkStructureType            s_type;
-    const void*                p_next;
-    VkIOSSurfaceCreateFlagsMVK flags;
-    const void*                p_view;
-} VkIOSSurfaceCreateInfoMVK;
+typedef vk_flags vk_iossurface_create_flags_mvk;
+typedef struct vk_iossurface_create_info_mvk {
+    vk_structure_type              s_type;
+    const void*                    p_next;
+    vk_iossurface_create_flags_mvk flags;
+    const void*                    p_view;
+} vk_iossurface_create_info_mvk;
 
-typedef VkResult(VKAPI_PTR* pfn_vk_create_iossurface_mvk)(VkInstance                       instance,
-                                                          const VkIOSSurfaceCreateInfoMVK* p_create_info,
-                                                          const VkAllocationCallbacks*     p_allocator,
-                                                          VkSurfaceKHR*                    p_surface);
+typedef vk_result(VKAPI_PTR* pfn_vk_create_iossurface_mvk)(vk_instance                          instance,
+                                                           const vk_iossurface_create_info_mvk* p_create_info,
+                                                           const vk_allocation_callbacks*       p_allocator,
+                                                           vk_surface_khr*                      p_surface);
 
 #ifndef VK_NO_PROTOTYPES
-VKAPI_ATTR VkResult VKAPI_CALL vk_create_iossurface_mvk(VkInstance                       instance,
-                                                        const VkIOSSurfaceCreateInfoMVK* p_create_info,
-                                                        const VkAllocationCallbacks*     p_allocator,
-                                                        VkSurfaceKHR* p_surface) __asm("vkCreateIOSSurfaceMVK");
+VKAPI_ATTR vk_result VKAPI_CALL vk_create_iossurface_mvk(vk_instance                          instance,
+                                                         const vk_iossurface_create_info_mvk* p_create_info,
+                                                         const vk_allocation_callbacks*       p_allocator,
+                                                         vk_surface_khr* p_surface) __asm("vkCreateIOSSurfaceMVK");
 #endif
 
 #ifdef __cplusplus
