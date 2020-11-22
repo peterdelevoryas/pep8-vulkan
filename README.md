@@ -3,7 +3,7 @@ Vulkan headers transformed to follow [PEP8](https://www.python.org/dev/peps/pep-
 
 Vulkan uses `camelCase` for functions and struct fields, `PascalCase` for types,
 and `SCREAMING_SNAKE_CASE` for constants. My codebase uses PEP8 (even though it's C, I still like
-PEP8), so I want the functions and attributes to be `snake_case`. So, I wrote `convert.c`
+PEP8), so I want the functions and struct fields to be `snake_case`. So, I wrote `convert.c`
 to rename functions and struct fields and add `__asm("originalName")` to retain
 the correct linkage.
 
