@@ -20,23 +20,23 @@ extern "C" {
 struct anative_window;
 #define VK_KHR_ANDROID_SURFACE_SPEC_VERSION 6
 #define VK_KHR_ANDROID_SURFACE_EXTENSION_NAME "VK_KHR_android_surface"
-typedef vk_flags vk_android_surface_create_flags_khr;
-typedef struct vk_android_surface_create_info_khr {
-    vk_structure_type                   s_type;
-    const void*                         p_next;
-    vk_android_surface_create_flags_khr flags;
-    struct anative_window*              window;
-} vk_android_surface_create_info_khr;
+typedef VkFlags VkAndroidSurfaceCreateFlagsKHR;
+typedef struct VkAndroidSurfaceCreateInfoKHR {
+    VkStructureType                s_type;
+    const void*                    p_next;
+    VkAndroidSurfaceCreateFlagsKHR flags;
+    struct anative_window*         window;
+} VkAndroidSurfaceCreateInfoKHR;
 
-typedef vk_result(VKAPI_PTR* pfn_vk_create_android_surface_khr)(vk_instance                               instance,
-                                                                const vk_android_surface_create_info_khr* p_create_info,
-                                                                const vk_allocation_callbacks*            p_allocator,
-                                                                vk_surface_khr*                           p_surface);
+typedef VkResult(VKAPI_PTR* pfn_vk_create_android_surface_khr)(VkInstance                           instance,
+                                                               const VkAndroidSurfaceCreateInfoKHR* p_create_info,
+                                                               const VkAllocationCallbacks*         p_allocator,
+                                                               VkSurfaceKHR*                        p_surface);
 
 #ifndef VK_NO_PROTOTYPES
-VKAPI_ATTR vk_result VKAPI_CALL vk_create_android_surface_khr(
-    vk_instance instance, const vk_android_surface_create_info_khr* p_create_info,
-    const vk_allocation_callbacks* p_allocator, vk_surface_khr* p_surface) __asm("vkCreateAndroidSurfaceKHR");
+VKAPI_ATTR VkResult VKAPI_CALL vk_create_android_surface_khr(
+    VkInstance instance, const VkAndroidSurfaceCreateInfoKHR* p_create_info, const VkAllocationCallbacks* p_allocator,
+    VkSurfaceKHR* p_surface) __asm("vkCreateAndroidSurfaceKHR");
 #endif
 
 #define vk_android_external_memory_android_hardware_buffer 1
@@ -44,64 +44,62 @@ struct ahardware_buffer;
 #define VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION 3
 #define VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_EXTENSION_NAME                                              \
     "VK_ANDROID_external_memory_android_hardware_buffer"
-typedef struct vk_android_hardware_buffer_usage_android {
-    vk_structure_type s_type;
-    void*             p_next;
-    uint64_t          android_hardware_buffer_usage;
-} vk_android_hardware_buffer_usage_android;
+typedef struct VkAndroidHardwareBufferUsageANDROID {
+    VkStructureType s_type;
+    void*           p_next;
+    uint64_t        android_hardware_buffer_usage;
+} VkAndroidHardwareBufferUsageANDROID;
 
-typedef struct vk_android_hardware_buffer_properties_android {
-    vk_structure_type s_type;
-    void*             p_next;
-    vk_device_size    allocation_size;
-    uint32_t          memory_type_bits;
-} vk_android_hardware_buffer_properties_android;
+typedef struct VkAndroidHardwareBufferPropertiesANDROID {
+    VkStructureType s_type;
+    void*           p_next;
+    VkDeviceSize    allocation_size;
+    uint32_t        memory_type_bits;
+} VkAndroidHardwareBufferPropertiesANDROID;
 
-typedef struct vk_android_hardware_buffer_format_properties_android {
-    vk_structure_type                 s_type;
-    void*                             p_next;
-    vk_format                         format;
-    uint64_t                          external_format;
-    vk_format_feature_flags           format_features;
-    vk_component_mapping              sampler_ycbcr_conversion_components;
-    vk_sampler_ycbcr_model_conversion suggested_ycbcr_model;
-    vk_sampler_ycbcr_range            suggested_ycbcr_range;
-    vk_chroma_location                suggested_xchroma_offset;
-    vk_chroma_location                suggested_ychroma_offset;
-} vk_android_hardware_buffer_format_properties_android;
+typedef struct VkAndroidHardwareBufferFormatPropertiesANDROID {
+    VkStructureType               s_type;
+    void*                         p_next;
+    VkFormat                      format;
+    uint64_t                      external_format;
+    VkFormatFeatureFlags          format_features;
+    VkComponentMapping            sampler_ycbcr_conversion_components;
+    VkSamplerYcbcrModelConversion suggested_ycbcr_model;
+    VkSamplerYcbcrRange           suggested_ycbcr_range;
+    VkChromaLocation              suggested_xchroma_offset;
+    VkChromaLocation              suggested_ychroma_offset;
+} VkAndroidHardwareBufferFormatPropertiesANDROID;
 
-typedef struct vk_import_android_hardware_buffer_info_android {
-    vk_structure_type        s_type;
+typedef struct VkImportAndroidHardwareBufferInfoANDROID {
+    VkStructureType          s_type;
     const void*              p_next;
     struct ahardware_buffer* buffer;
-} vk_import_android_hardware_buffer_info_android;
+} VkImportAndroidHardwareBufferInfoANDROID;
 
-typedef struct vk_memory_get_android_hardware_buffer_info_android {
-    vk_structure_type s_type;
-    const void*       p_next;
-    vk_device_memory  memory;
-} vk_memory_get_android_hardware_buffer_info_android;
+typedef struct VkMemoryGetAndroidHardwareBufferInfoANDROID {
+    VkStructureType s_type;
+    const void*     p_next;
+    VkDeviceMemory  memory;
+} VkMemoryGetAndroidHardwareBufferInfoANDROID;
 
-typedef struct vk_external_format_android {
-    vk_structure_type s_type;
-    void*             p_next;
-    uint64_t          external_format;
-} vk_external_format_android;
+typedef struct VkExternalFormatANDROID {
+    VkStructureType s_type;
+    void*           p_next;
+    uint64_t        external_format;
+} VkExternalFormatANDROID;
 
-typedef vk_result(VKAPI_PTR* pfn_vk_get_android_hardware_buffer_properties_android)(
-    vk_device device, const struct ahardware_buffer* buffer,
-    vk_android_hardware_buffer_properties_android* p_properties);
-typedef vk_result(VKAPI_PTR* pfn_vk_get_memory_android_hardware_buffer_android)(
-    vk_device device, const vk_memory_get_android_hardware_buffer_info_android* p_info,
-    struct ahardware_buffer** p_buffer);
+typedef VkResult(VKAPI_PTR* pfn_vk_get_android_hardware_buffer_properties_android)(
+    VkDevice device, const struct ahardware_buffer* buffer, VkAndroidHardwareBufferPropertiesANDROID* p_properties);
+typedef VkResult(VKAPI_PTR* pfn_vk_get_memory_android_hardware_buffer_android)(
+    VkDevice device, const VkMemoryGetAndroidHardwareBufferInfoANDROID* p_info, struct ahardware_buffer** p_buffer);
 
 #ifndef VK_NO_PROTOTYPES
-VKAPI_ATTR vk_result VKAPI_CALL vk_get_android_hardware_buffer_properties_android(
-    vk_device device, const struct ahardware_buffer* buffer,
-    vk_android_hardware_buffer_properties_android* p_properties) __asm("vkGetAndroidHardwareBufferPropertiesANDROID");
+VKAPI_ATTR VkResult VKAPI_CALL vk_get_android_hardware_buffer_properties_android(
+    VkDevice device, const struct ahardware_buffer* buffer,
+    VkAndroidHardwareBufferPropertiesANDROID* p_properties) __asm("vkGetAndroidHardwareBufferPropertiesANDROID");
 
-VKAPI_ATTR vk_result VKAPI_CALL vk_get_memory_android_hardware_buffer_android(
-    vk_device device, const vk_memory_get_android_hardware_buffer_info_android* p_info,
+VKAPI_ATTR VkResult VKAPI_CALL vk_get_memory_android_hardware_buffer_android(
+    VkDevice device, const VkMemoryGetAndroidHardwareBufferInfoANDROID* p_info,
     struct ahardware_buffer** p_buffer) __asm("vkGetMemoryAndroidHardwareBufferANDROID");
 #endif
 

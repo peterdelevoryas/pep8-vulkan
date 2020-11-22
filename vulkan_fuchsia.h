@@ -19,22 +19,22 @@ extern "C" {
 #define vk_fuchsia_imagepipe_surface 1
 #define VK_FUCHSIA_IMAGEPIPE_SURFACE_SPEC_VERSION 1
 #define VK_FUCHSIA_IMAGEPIPE_SURFACE_EXTENSION_NAME "VK_FUCHSIA_imagepipe_surface"
-typedef vk_flags vk_image_pipe_surface_create_flags_fuchsia;
-typedef struct vk_image_pipe_surface_create_info_fuchsia {
-    vk_structure_type                          s_type;
-    const void*                                p_next;
-    vk_image_pipe_surface_create_flags_fuchsia flags;
-    zx_handle_t                                image_pipe_handle;
-} vk_image_pipe_surface_create_info_fuchsia;
+typedef VkFlags VkImagePipeSurfaceCreateFlagsFUCHSIA;
+typedef struct VkImagePipeSurfaceCreateInfoFUCHSIA {
+    VkStructureType                      s_type;
+    const void*                          p_next;
+    VkImagePipeSurfaceCreateFlagsFUCHSIA flags;
+    zx_handle_t                          image_pipe_handle;
+} VkImagePipeSurfaceCreateInfoFUCHSIA;
 
-typedef vk_result(VKAPI_PTR* pfn_vk_create_image_pipe_surface_fuchsia)(
-    vk_instance instance, const vk_image_pipe_surface_create_info_fuchsia* p_create_info,
-    const vk_allocation_callbacks* p_allocator, vk_surface_khr* p_surface);
+typedef VkResult(VKAPI_PTR* pfn_vk_create_image_pipe_surface_fuchsia)(
+    VkInstance instance, const VkImagePipeSurfaceCreateInfoFUCHSIA* p_create_info,
+    const VkAllocationCallbacks* p_allocator, VkSurfaceKHR* p_surface);
 
 #ifndef VK_NO_PROTOTYPES
-VKAPI_ATTR vk_result VKAPI_CALL vk_create_image_pipe_surface_fuchsia(
-    vk_instance instance, const vk_image_pipe_surface_create_info_fuchsia* p_create_info,
-    const vk_allocation_callbacks* p_allocator, vk_surface_khr* p_surface) __asm("vkCreateImagePipeSurfaceFUCHSIA");
+VKAPI_ATTR VkResult VKAPI_CALL vk_create_image_pipe_surface_fuchsia(
+    VkInstance instance, const VkImagePipeSurfaceCreateInfoFUCHSIA* p_create_info,
+    const VkAllocationCallbacks* p_allocator, VkSurfaceKHR* p_surface) __asm("vkCreateImagePipeSurfaceFUCHSIA");
 #endif
 
 #ifdef __cplusplus
