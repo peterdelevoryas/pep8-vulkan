@@ -47,20 +47,23 @@
 #define MIN_PHYS_DEV_EXTENSION_ICD_INTERFACE_VERSION 4
 
 // old typedefs that don't follow a proper naming convention but are preserved for compatibility
-typedef vk_result(VKAPI_PTR *pfn_vk_negotiate_loader_icdinterface_version)(uint32_t *p_version) __asm("vk_icdEnumerateAdapterPhysicalDevices");
+typedef VkResult(VKAPI_PTR* pfn_vk_negotiate_loader_icdinterface_version)(uint32_t* p_version) __asm(
+    "vk_icdEnumerateAdapterPhysicalDevices");
 // this is defined in vk_layer.h which will be found by the loader, but if an ICD is building against this
 // file directly, it won't be found.
 #ifndef pfn_get_physical_device_proc_addr
-typedef pfn_vk_void_function(VKAPI_PTR *pfn_get_physical_device_proc_addr)(vk_instance instance, const char *p_name);
+typedef pfn_vk_void_function(VKAPI_PTR* pfn_get_physical_device_proc_addr)(VkInstance instance, const char* p_name);
 #endif
 
 // typedefs for loader/ICD interface
-typedef vk_result (VKAPI_PTR *pfn_vk_icd_negotiate_loader_icdinterface_version)(uint32_t* p_version);
-typedef pfn_vk_void_function (VKAPI_PTR *pfn_vk_icd_get_instance_proc_addr)(vk_instance instance, const char* p_name);
-typedef pfn_vk_void_function (VKAPI_PTR *pfn_vk_icd_get_physical_device_proc_addr)(vk_instance instance, const char* p_name);
+typedef VkResult(VKAPI_PTR* pfn_vk_icd_negotiate_loader_icdinterface_version)(uint32_t* p_version);
+typedef pfn_vk_void_function(VKAPI_PTR* pfn_vk_icd_get_instance_proc_addr)(VkInstance instance, const char* p_name);
+typedef pfn_vk_void_function(VKAPI_PTR* pfn_vk_icd_get_physical_device_proc_addr)(VkInstance  instance,
+                                                                                  const char* p_name);
 #if defined(VK_USE_PLATFORM_WIN32_KHR)
-typedef vk_result (VKAPI_PTR *pfn_vk_icd_enumerate_adapter_physical_devices)(vk_instance instance, LUID adapter_luid,
-    uint32_t* p_physical_device_count, vk_physical_device* p_physical_devices);
+typedef VkResult(VKAPI_PTR* pfn_vk_icd_enumerate_adapter_physical_devices)(VkInstance instance, LUID adapter_luid,
+                                                                           uint32_t*         p_physical_device_count,
+                                                                           VkPhysicalDevice* p_physical_devices);
 #endif
 
 // prototypes for loader/ICD interface
@@ -68,12 +71,16 @@ typedef vk_result (VKAPI_PTR *pfn_vk_icd_enumerate_adapter_physical_devices)(vk_
 #ifdef __cplusplus
 extern "C" {
 #endif
-    VKAPI_ATTR vk_result VKAPI_CALL vk_icd_negotiate_loader_icdinterface_version(uint32_t* p_version) __asm("vk_icdNegotiateLoaderICDInterfaceVersion");
-    VKAPI_ATTR pfn_vk_void_function VKAPI_CALL vk_icd_get_instance_proc_addr(vk_instance instance, const char* p_name) __asm("vk_icdGetInstanceProcAddr");
-    VKAPI_ATTR pfn_vk_void_function VKAPI_CALL vk_icd_get_physical_device_proc_addr(vk_instance isntance, const char* p_name) __asm("vk_icdGetPhysicalDeviceProcAddr");
+VKAPI_ATTR VkResult VKAPI_CALL
+vk_icd_negotiate_loader_icdinterface_version(uint32_t* p_version) __asm("vk_icdNegotiateLoaderICDInterfaceVersion");
+VKAPI_ATTR pfn_vk_void_function VKAPI_CALL
+vk_icd_get_instance_proc_addr(VkInstance instance, const char* p_name) __asm("vk_icdGetInstanceProcAddr");
+VKAPI_ATTR pfn_vk_void_function VKAPI_CALL
+vk_icd_get_physical_device_proc_addr(VkInstance isntance, const char* p_name) __asm("vk_icdGetPhysicalDeviceProcAddr");
 #if defined(VK_USE_PLATFORM_WIN32_KHR)
-    VKAPI_ATTR vk_result VKAPI_CALL vk_icd_enumerate_adapter_physical_devices(vk_instance instance, LUID adapter_luid,
-        uint32_t* p_physical_device_count, vk_physical_device* p_physical_devices) __asm("vk_icdEnumerateAdapterPhysicalDevices");
+VKAPI_ATTR VkResult VKAPI_CALL vk_icd_enumerate_adapter_physical_devices(
+    VkInstance instance, LUID adapter_luid, uint32_t* p_physical_device_count,
+    VkPhysicalDevice* p_physical_devices) __asm("vk_icdEnumerateAdapterPhysicalDevices");
 #endif
 #ifdef __cplusplus
 }
@@ -90,21 +97,21 @@ extern "C" {
 
 typedef union {
     uintptr_t loader_magic;
-    void *loader_data;
+    void*     loader_data;
 } VK_LOADER_DATA;
 
-static inline void set_loader_magic_value(void *p_new_object) {
-    VK_LOADER_DATA *loader_info = (VK_LOADER_DATA *)p_new_object;
-    loader_info->loader_magic = ICD_LOADER_MAGIC;
+static inline void set_loader_magic_value(void* p_new_object) {
+    VK_LOADER_DATA* loader_info = (VK_LOADER_DATA*) p_new_object;
+    loader_info->loader_magic   = ICD_LOADER_MAGIC;
 }
 
-static inline bool valid_loader_magic_value(void *p_new_object) {
-    const VK_LOADER_DATA *loader_info = (VK_LOADER_DATA *)p_new_object;
+static inline bool valid_loader_magic_value(void* p_new_object) {
+    const VK_LOADER_DATA* loader_info = (VK_LOADER_DATA*) p_new_object;
     return (loader_info->loader_magic & 0xffffffff) == ICD_LOADER_MAGIC;
 }
 
 /*
- * windows and linux icds will treat vk_surface_khr as a pointer to a struct that
+ * windows and linux icds will treat VkSurfaceKHR as a pointer to a struct that
  * contains the platform-specific connection and surface information.
  */
 typedef enum {
@@ -121,108 +128,108 @@ typedef enum {
     VK_ICD_WSI_PLATFORM_METAL,
     VK_ICD_WSI_PLATFORM_DIRECTFB,
     VK_ICD_WSI_PLATFORM_VI,
-} vk_icd_wsi_platform;
+} VkIcdWsiPlatform;
 
 typedef struct {
-    vk_icd_wsi_platform platform;
-} vk_icd_surface_base;
+    VkIcdWsiPlatform platform;
+} VkIcdSurfaceBase;
 
 #ifdef VK_USE_PLATFORM_MIR_KHR
 typedef struct {
-    vk_icd_surface_base base;
-    mir_connection *connection;
-    mir_surface *mir_surface;
-} vk_icd_surface_mir;
-#endif  // VK_USE_PLATFORM_MIR_KHR
+    VkIcdSurfaceBase base;
+    mir_connection*  connection;
+    mir_surface*     mir_surface;
+} VkIcdSurfaceMir;
+#endif // VK_USE_PLATFORM_MIR_KHR
 
 #ifdef VK_USE_PLATFORM_WAYLAND_KHR
 typedef struct {
-    vk_icd_surface_base base;
-    struct wl_display *display;
-    struct wl_surface *surface;
-} vk_icd_surface_wayland;
-#endif  // VK_USE_PLATFORM_WAYLAND_KHR
+    VkIcdSurfaceBase   base;
+    struct wl_display* display;
+    struct wl_surface* surface;
+} VkIcdSurfaceWayland;
+#endif // VK_USE_PLATFORM_WAYLAND_KHR
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 typedef struct {
-    vk_icd_surface_base base;
-    HINSTANCE hinstance;
-    HWND hwnd;
-} vk_icd_surface_win32;
-#endif  // VK_USE_PLATFORM_WIN32_KHR
+    VkIcdSurfaceBase base;
+    HINSTANCE        hinstance;
+    HWND             hwnd;
+} VkIcdSurfaceWin32;
+#endif // VK_USE_PLATFORM_WIN32_KHR
 
 #ifdef VK_USE_PLATFORM_XCB_KHR
 typedef struct {
-    vk_icd_surface_base base;
-    xcb_connection_t *connection;
-    xcb_window_t window;
-} vk_icd_surface_xcb;
-#endif  // VK_USE_PLATFORM_XCB_KHR
+    VkIcdSurfaceBase  base;
+    xcb_connection_t* connection;
+    xcb_window_t      window;
+} VkIcdSurfaceXcb;
+#endif // VK_USE_PLATFORM_XCB_KHR
 
 #ifdef VK_USE_PLATFORM_XLIB_KHR
 typedef struct {
-    vk_icd_surface_base base;
-    display *dpy;
-    window window;
-} vk_icd_surface_xlib;
-#endif  // VK_USE_PLATFORM_XLIB_KHR
+    VkIcdSurfaceBase base;
+    display*         dpy;
+    window           window;
+} VkIcdSurfaceXlib;
+#endif // VK_USE_PLATFORM_XLIB_KHR
 
 #ifdef VK_USE_PLATFORM_DIRECTFB_EXT
 typedef struct {
-    vk_icd_surface_base base;
-    idirect_fb *dfb;
-    idirect_fbsurface *surface;
-} vk_icd_surface_direct_fb;
-#endif  // VK_USE_PLATFORM_DIRECTFB_EXT
+    VkIcdSurfaceBase   base;
+    idirect_fb*        dfb;
+    idirect_fbsurface* surface;
+} VkIcdSurfaceDirectFB;
+#endif // VK_USE_PLATFORM_DIRECTFB_EXT
 
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
 typedef struct {
-    vk_icd_surface_base base;
-    struct anative_window *window;
-} vk_icd_surface_android;
-#endif  // VK_USE_PLATFORM_ANDROID_KHR
+    VkIcdSurfaceBase       base;
+    struct anative_window* window;
+} VkIcdSurfaceAndroid;
+#endif // VK_USE_PLATFORM_ANDROID_KHR
 
 #ifdef VK_USE_PLATFORM_MACOS_MVK
 typedef struct {
-    vk_icd_surface_base base;
-    const void *p_view;
-} vk_icd_surface_mac_os;
-#endif  // VK_USE_PLATFORM_MACOS_MVK
+    VkIcdSurfaceBase base;
+    const void*      p_view;
+} VkIcdSurfaceMacOS;
+#endif // VK_USE_PLATFORM_MACOS_MVK
 
 #ifdef VK_USE_PLATFORM_IOS_MVK
 typedef struct {
-    vk_icd_surface_base base;
-    const void *p_view;
-} vk_icd_surface_ios;
-#endif  // VK_USE_PLATFORM_IOS_MVK
+    VkIcdSurfaceBase base;
+    const void*      p_view;
+} VkIcdSurfaceIOS;
+#endif // VK_USE_PLATFORM_IOS_MVK
 
 typedef struct {
-    vk_icd_surface_base base;
-    vk_display_mode_khr display_mode;
-    uint32_t plane_index;
-    uint32_t plane_stack_index;
-    vk_surface_transform_flag_bits_khr transform;
-    float global_alpha;
-    vk_display_plane_alpha_flag_bits_khr alpha_mode;
-    vk_extent_2d image_extent;
-} vk_icd_surface_display;
+    VkIcdSurfaceBase               base;
+    VkDisplayModeKHR               display_mode;
+    uint32_t                       plane_index;
+    uint32_t                       plane_stack_index;
+    VkSurfaceTransformFlagBitsKHR  transform;
+    float                          global_alpha;
+    VkDisplayPlaneAlphaFlagBitsKHR alpha_mode;
+    VkExtent2D                     image_extent;
+} VkIcdSurfaceDisplay;
 
 typedef struct {
-    vk_icd_surface_base base;
-} vk_icd_surface_headless;
+    VkIcdSurfaceBase base;
+} VkIcdSurfaceHeadless;
 
 #ifdef VK_USE_PLATFORM_METAL_EXT
 typedef struct {
-    vk_icd_surface_base base;
-    const cametal_layer *p_layer;
-} vk_icd_surface_metal;
+    VkIcdSurfaceBase     base;
+    const cametal_layer* p_layer;
+} VkIcdSurfaceMetal;
 #endif // VK_USE_PLATFORM_METAL_EXT
 
 #ifdef VK_USE_PLATFORM_VI_NN
 typedef struct {
-    vk_icd_surface_base base;
-    void *window;
-} vk_icd_surface_vi;
+    VkIcdSurfaceBase base;
+    void*            window;
+} VkIcdSurfaceVi;
 #endif // VK_USE_PLATFORM_VI_NN
 
-#endif  // VKICD_H
+#endif // VKICD_H

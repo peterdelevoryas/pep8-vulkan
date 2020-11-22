@@ -1,0 +1,21 @@
+IndentWidth: 4
+Language: Cpp
+SortIncludes: false
+ColumnLimit: 120
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+BinPackArguments: true
+BinPackParameters: true
+SpaceAfterCStyleCast: true
+BreakBeforeBraces: Attach
+BreakBeforeTernaryOperators: true
+BreakBeforeBinaryOperators: NonAssignment
+Cpp11BracedListStyle: false
+IndentCaseLabels: true
+UseTab: Never
+
+PointerAlignment: Left
+AlignAfterOpenBracket: Align
+AlignTrailingComments: true
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true

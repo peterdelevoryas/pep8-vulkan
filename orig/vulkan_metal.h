@@ -12,12 +12,9 @@
 **
 */
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
 
 #define VK_EXT_metal_surface 1
 
@@ -31,20 +28,21 @@ typedef void CAMetalLayer;
 #define VK_EXT_METAL_SURFACE_EXTENSION_NAME "VK_EXT_metal_surface"
 typedef VkFlags VkMetalSurfaceCreateFlagsEXT;
 typedef struct VkMetalSurfaceCreateInfoEXT {
-    VkStructureType                 sType;
-    const void*                     pNext;
-    VkMetalSurfaceCreateFlagsEXT    flags;
-    const CAMetalLayer*             pLayer;
+    VkStructureType              sType;
+    const void*                  pNext;
+    VkMetalSurfaceCreateFlagsEXT flags;
+    const CAMetalLayer*          pLayer;
 } VkMetalSurfaceCreateInfoEXT;
 
-typedef VkResult (VKAPI_PTR *PFN_vkCreateMetalSurfaceEXT)(VkInstance instance, const VkMetalSurfaceCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
+typedef VkResult(VKAPI_PTR* PFN_vkCreateMetalSurfaceEXT)(VkInstance                         instance,
+                                                         const VkMetalSurfaceCreateInfoEXT* pCreateInfo,
+                                                         const VkAllocationCallbacks*       pAllocator,
+                                                         VkSurfaceKHR*                      pSurface);
 
 #ifndef VK_NO_PROTOTYPES
-VKAPI_ATTR VkResult VKAPI_CALL vkCreateMetalSurfaceEXT(
-    VkInstance                                  instance,
-    const VkMetalSurfaceCreateInfoEXT*          pCreateInfo,
-    const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface);
+VKAPI_ATTR VkResult VKAPI_CALL vkCreateMetalSurfaceEXT(VkInstance                         instance,
+                                                       const VkMetalSurfaceCreateInfoEXT* pCreateInfo,
+                                                       const VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
 #endif
 
 #ifdef __cplusplus

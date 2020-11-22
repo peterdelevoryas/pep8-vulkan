@@ -12,44 +12,39 @@
 **
 */
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
-
 #define vk_ggp_stream_descriptor_surface 1
 #define VK_GGP_STREAM_DESCRIPTOR_SURFACE_SPEC_VERSION 1
 #define VK_GGP_STREAM_DESCRIPTOR_SURFACE_EXTENSION_NAME "VK_GGP_stream_descriptor_surface"
-typedef vk_flags vk_stream_descriptor_surface_create_flags_ggp;
-typedef struct vk_stream_descriptor_surface_create_info_ggp {
-    vk_structure_type                            s_type;
-    const void*                                p_next;
-    vk_stream_descriptor_surface_create_flags_ggp    flags;
-    ggp_stream_descriptor                        stream_descriptor;
-} vk_stream_descriptor_surface_create_info_ggp;
+typedef VkFlags VkStreamDescriptorSurfaceCreateFlagsGGP;
+typedef struct VkStreamDescriptorSurfaceCreateInfoGGP {
+    VkStructureType                         s_type;
+    const void*                             p_next;
+    VkStreamDescriptorSurfaceCreateFlagsGGP flags;
+    ggp_stream_descriptor                   stream_descriptor;
+} VkStreamDescriptorSurfaceCreateInfoGGP;
 
-typedef vk_result (VKAPI_PTR *pfn_vk_create_stream_descriptor_surface_ggp)(vk_instance instance, const vk_stream_descriptor_surface_create_info_ggp* p_create_info, const vk_allocation_callbacks* p_allocator, vk_surface_khr* p_surface);
+typedef VkResult(VKAPI_PTR* pfn_vk_create_stream_descriptor_surface_ggp)(
+    VkInstance instance, const VkStreamDescriptorSurfaceCreateInfoGGP* p_create_info,
+    const VkAllocationCallbacks* p_allocator, VkSurfaceKHR* p_surface);
 
 #ifndef VK_NO_PROTOTYPES
-VKAPI_ATTR vk_result VKAPI_CALL vk_create_stream_descriptor_surface_ggp(
-    vk_instance                                  instance,
-    const vk_stream_descriptor_surface_create_info_ggp* p_create_info,
-    const vk_allocation_callbacks*                p_allocator,
-    vk_surface_khr*                               p_surface) __asm("vkCreateStreamDescriptorSurfaceGGP");
+VKAPI_ATTR VkResult VKAPI_CALL vk_create_stream_descriptor_surface_ggp(
+    VkInstance instance, const VkStreamDescriptorSurfaceCreateInfoGGP* p_create_info,
+    const VkAllocationCallbacks* p_allocator, VkSurfaceKHR* p_surface) __asm("vkCreateStreamDescriptorSurfaceGGP");
 #endif
 
-
 #define vk_ggp_frame_token 1
-#define VK_GGP_FRAME_TOKEN_SPEC_VERSION   1
+#define VK_GGP_FRAME_TOKEN_SPEC_VERSION 1
 #define VK_GGP_FRAME_TOKEN_EXTENSION_NAME "VK_GGP_frame_token"
-typedef struct vk_present_frame_token_ggp {
-    vk_structure_type    s_type;
-    const void*        p_next;
-    ggp_frame_token      frame_token;
-} vk_present_frame_token_ggp;
-
+typedef struct VkPresentFrameTokenGGP {
+    VkStructureType s_type;
+    const void*     p_next;
+    ggp_frame_token frame_token;
+} VkPresentFrameTokenGGP;
 
 #ifdef __cplusplus
 }
