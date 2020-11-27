@@ -26,24 +26,24 @@ typedef void cametal_layer;
 
 #define VK_EXT_METAL_SURFACE_SPEC_VERSION 1
 #define VK_EXT_METAL_SURFACE_EXTENSION_NAME "VK_EXT_metal_surface"
-typedef VkFlags VkMetalSurfaceCreateFlagsEXT;
-typedef struct VkMetalSurfaceCreateInfoEXT {
-    VkStructureType              s_type;
-    const void*                  p_next;
-    VkMetalSurfaceCreateFlagsEXT flags;
-    const cametal_layer*         p_layer;
-} VkMetalSurfaceCreateInfoEXT;
+typedef vk_flags vk_metal_surface_create_flags_ext;
+typedef struct vk_metal_surface_create_info_ext {
+    vk_structure_type                 s_type;
+    const void*                       p_next;
+    vk_metal_surface_create_flags_ext flags;
+    const cametal_layer*              p_layer;
+} vk_metal_surface_create_info_ext;
 
-typedef VkResult(VKAPI_PTR* pfn_vk_create_metal_surface_ext)(VkInstance                         instance,
-                                                             const VkMetalSurfaceCreateInfoEXT* p_create_info,
-                                                             const VkAllocationCallbacks*       p_allocator,
-                                                             VkSurfaceKHR*                      p_surface);
+typedef vk_result(VKAPI_PTR* pfn_vk_create_metal_surface_ext)(vk_instance                             instance,
+                                                              const vk_metal_surface_create_info_ext* p_create_info,
+                                                              const vk_allocation_callbacks*          p_allocator,
+                                                              vk_surface_khr*                         p_surface);
 
 #ifndef VK_NO_PROTOTYPES
-VKAPI_ATTR VkResult VKAPI_CALL vk_create_metal_surface_ext(VkInstance                         instance,
-                                                           const VkMetalSurfaceCreateInfoEXT* p_create_info,
-                                                           const VkAllocationCallbacks*       p_allocator,
-                                                           VkSurfaceKHR* p_surface) __asm("vkCreateMetalSurfaceEXT");
+VKAPI_ATTR vk_result VKAPI_CALL vk_create_metal_surface_ext(vk_instance                             instance,
+                                                            const vk_metal_surface_create_info_ext* p_create_info,
+                                                            const vk_allocation_callbacks*          p_allocator,
+                                                            vk_surface_khr* p_surface) __asm("vkCreateMetalSurfaceEXT");
 #endif
 
 #ifdef __cplusplus

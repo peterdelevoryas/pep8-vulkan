@@ -1,11 +1,4 @@
-# pep8-vulkan
-Vulkan headers transformed to follow [PEP8](https://www.python.org/dev/peps/pep-0008/)
-
-Vulkan uses `camelCase` for functions and struct fields, `PascalCase` for types,
-and `SCREAMING_SNAKE_CASE` for constants. My codebase uses PEP8 (even though it's C, I still like
-PEP8), so I want the functions and struct fields to be `snake_case`. So, I wrote `convert.c`
-to rename functions and struct fields and add `__asm("originalName")` to retain
-the correct linkage.
+# snake-case-vulkan
 
 For example:
 
@@ -27,18 +20,20 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateInstance(const VkInstanceCreateInfo*  pCr
 ```
 
 ```c
-typedef struct VkInstanceCreateInfo {
-    VkStructureType          s_type;
-    const void*              p_next;
-    VkInstanceCreateFlags    flags;
-    const VkApplicationInfo* p_application_info;
-    uint32_t                 enabled_layer_count;
-    const char* const*       pp_enabled_layer_names;
-    uint32_t                 enabled_extension_count;
-    const char* const*       pp_enabled_extension_names;
-} VkInstanceCreateInfo;
+typedef struct vk_instance_create_info {
+    vk_structure_type          s_type;
+    const void*                p_next;
+    vk_instance_create_flags   flags;
+    const vk_application_info* p_application_info;
+    uint32_t                   enabled_layer_count;
+    const char* const*         pp_enabled_layer_names;
+    uint32_t                   enabled_extension_count;
+    const char* const*         pp_enabled_extension_names;
+} vk_instance_create_info;
 
-VKAPI_ATTR VkResult VKAPI_CALL vk_create_instance(const VkInstanceCreateInfo*  p_create_info,
-                                                  const VkAllocationCallbacks* p_allocator,
-                                                  VkInstance*                  p_instance) __asm("vkCreateInstance");
+VKAPI_ATTR vk_result VKAPI_CALL vk_create_instance(const vk_instance_create_info* p_create_info,
+                                                   const vk_allocation_callbacks* p_allocator,
+                                                   vk_instance*                   p_instance) __asm("vkCreateInstance");
 ```
+
+`TODO` Build headers with `cmake`.
