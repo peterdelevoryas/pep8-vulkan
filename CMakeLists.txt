@@ -1,7 +1,0 @@
-cmake_minimum_required(VERSION 3.19)
-set(proj snake-case-vulkan)
-project(${proj})
-find_package(Vulkan REQUIRED)
-add_library(${proj} INTERFACE)
-target_include_directories(${proj} INTERFACE .)
-target_link_libraries(${proj} INTERFACE Vulkan::Vulkan)
