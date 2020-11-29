@@ -1,13 +1,8 @@
 # pep8-vulkan
-Vulkan headers transformed to follow [PEP8](https://www.python.org/dev/peps/pep-0008/)
 
-Vulkan uses `camelCase` for functions and struct fields, `PascalCase` for types,
-and `SCREAMING_SNAKE_CASE` for constants. My codebase uses PEP8 (even though it's C, I still like
-PEP8), so I want the functions and struct fields to be `snake_case`. So, I wrote `convert.c`
-to rename functions and struct fields and add `__asm("originalName")` to retain
-the correct linkage.
+[PEP8](https://www.python.org/dev/peps/pep-0008/)
 
-For example:
+Example of the differences this project adds:
 
 ```c
 typedef struct VkInstanceCreateInfo {
@@ -41,4 +36,31 @@ typedef struct VkInstanceCreateInfo {
 VKAPI_ATTR VkResult VKAPI_CALL vk_create_instance(const VkInstanceCreateInfo*  p_create_info,
                                                   const VkAllocationCallbacks* p_allocator,
                                                   VkInstance*                  p_instance) __asm("vkCreateInstance");
+```
+
+To use this in a cmake project:
+
+```
+$ cd your-project/
+$ git submodule add https://github.com/peterdelevoryas/pep8-vulkan
+```
+
+In `your-project/CMakeLists.txt`:
+
+```
+cmake_minimum_required(VERSION 3.19)
+project(your-project)
+
+add_subdirectory(pep8-vulkan)
+
+add_executable(your-target main.c)
+target_link_libraries(your-target pep8-vulkan)
+```
+
+In source files:
+
+```
+...
+#include "pep8-vulkan/vulkan.h"
+...
 ```
