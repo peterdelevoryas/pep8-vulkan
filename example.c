@@ -21,7 +21,7 @@ int main() {
     vk_create_instance(&info, NULL, &instance);
     assert(instance);
 
-    uint32_t           physical_device_count = 1;
+    uint32_t         physical_device_count = 1;
     VkPhysicalDevice physical_device;
     vk_enumerate_physical_devices(instance, &physical_device_count, &physical_device);
     assert(physical_device);
